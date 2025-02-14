@@ -1,44 +1,48 @@
-// App.js
-import { Network, TatumSDK, Ethereum } from "@tatumio/tatum";
 import React, { useState } from "react";
+import { getBalance } from "../../services/tatumService";
+import { isValidBlockchainAddress } from "../../services/validators/addressValidator";
+import { Network } from "@tatumio/tatum";
+import { ChainAsset } from "../../constants/chain-asset";
 
 function Form() {
-  const [inputValue, setInputValue] = useState(""); // State to hold the input value
-  const [labelText, setLabelText] = useState(""); // State to hold the label text
+  const [inputValue, setInputValue] = useState("");
+  const [labelText, setLabelText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleButtonClick = async () => {
-    const tatum = await TatumSDK.init<Ethereum>({
-      network: Network.ETHEREUM_SEPOLIA,
-      apiKey: { v4: import.meta.env.VITE_TATUM_API_KEY  },
-      verbose: true,
-    });
-    const balance = await tatum.address.getBalance({
-      addresses: [inputValue],
-    });
-    const balanceData = balance.data.filter(
-      (asset) => asset.asset === "ETH"
-    )[0];
+    if (!isValidBlockchainAddress(inputValue, Network.ETHEREUM_SEPOLIA)) {
+      setLabelText("Invalid Ethereum address.");
+      return;
+    }
 
-    setLabelText(`Balance: ${balanceData.balance}`);
+    setLoading(true);
+    setLabelText("Fetching balance...");
+
+    try {
+      const balance = await getBalance(Network.ETHEREUM_SEPOLIA, inputValue, ChainAsset.ETH);
+      setLabelText(`Balance: ${balance} ETH`);
+    } catch (error) {
+      setLabelText("Error fetching balance.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div>
-      <p>
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Enter ETH wallet address to get balance"
-          style={{ padding: "5px", width: "320px" }}
-        />
-      </p>
-      <button onClick={handleButtonClick} style={{ padding: "5px" }}>
-        Click Me
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Enter Ethereum wallet address"
+        className="input-box"
+      />
+
+      <button onClick={handleButtonClick} disabled={loading} className="button">
+        {loading ? "Fetching..." : "Get Balance"}
       </button>
-      <p style={{ padding: "5px", fontSize: "16px", fontWeight: "bold" }}>
-        {labelText}
-      </p>
+
+      <p className="result">{labelText}</p>
     </div>
   );
 }
