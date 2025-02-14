@@ -1,5 +1,8 @@
 # tatum-client-app
 
+## Deployed App
+https://tatum-client-app.vercel.app/
+
 <img width="691" alt="b-g" src="https://github.com/user-attachments/assets/5927f1a6-7192-4a13-bb3e-0acf3a72bce9" />
 
 
@@ -7,7 +10,7 @@
 
 
 ## Environment Variables
-- Duplicate `.env.example` to `.env` and update `VITE_TATUM_API_KEY` with your Tatum API key.
+- Duplicate `.env.example` to `.env` and update `VITE_TATUM_{CHAIN}_{NETWORK}_API_KEY` with your Tatum API key.
 
 ## Getting Started
 

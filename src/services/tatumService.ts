@@ -2,15 +2,30 @@ import { Network, TatumSDK, ITatumSdkChain, TatumConfig, Ethereum, Status } from
 import { ChainAsset } from '../constants/chain-asset';
 
 /**
+ * Retrieves the appropriate API key based on the selected network.
+ */
+const getApiKeyForNetwork = (network: Network): string => {
+  const envVarName = `VITE_TATUM_${network.toUpperCase().replace(/-/g, "_")}_API_KEY`;
+  const apiKey = import.meta.env[envVarName];
+
+  if (!apiKey) {
+    throw new Error(`Missing API key for network: ${network}`);
+  }
+
+  return apiKey;
+};
+
+/**
  * Initialize Tatum SDK with the given blockchain network.
  */
 export const getTatumInstance = async <T extends ITatumSdkChain = Ethereum>(network: Network): Promise<T> => {
   return await TatumSDK.init<T>({
     network,
-    apiKey: { v4: import.meta.env.VITE_TATUM_API_KEY },
+    apiKey: { v4: getApiKeyForNetwork(network) },
     verbose: true,
   } as TatumConfig);
 };
+
 
 /**
  * Fetch the balance of a given asset (e.g., ETH, MATIC, BTC) on any supported network.
