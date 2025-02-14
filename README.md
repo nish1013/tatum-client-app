@@ -1,5 +1,8 @@
 # tatum-client-app
 
+## Deployed App
+https://tatum-client-app.vercel.app/
+
 <img width="691" alt="b-g" src="https://github.com/user-attachments/assets/5927f1a6-7192-4a13-bb3e-0acf3a72bce9" />
 
 
