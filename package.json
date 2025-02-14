@@ -7,10 +7,12 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@tailwindcss/vite": "^4.0.6",
 		"@tatumio/tatum": "^4.2.0",
 		"mongodb": "^3.0.0",
 		"preact": "^10.22.1",
-		"preact-iso": "^2.6.3"
+		"preact-iso": "^2.6.3",
+		"tailwindcss": "^4.0.6"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.9.0",
