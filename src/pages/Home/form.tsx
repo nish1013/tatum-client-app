@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { getBalance } from "../../services/tatumService";
 import { isValidBlockchainAddress } from "../../services/validators/addressValidator";
 import { Network } from "@tatumio/tatum";
-import { ChainAsset } from "../../constants/chain-asset";
 import { formatNetworkName } from "../../utils/text-util";
 import { CHAIN_NETWORKS } from '../../constants/chain-map';
+import { getAsset } from '../../utils/chain-utils';
 
 function Form() {
   const [inputValue, setInputValue] = useState("");
@@ -31,8 +31,8 @@ function Form() {
     setLabelText("Fetching balance...");
 
     try {
-      const balance = await getBalance(network, inputValue, ChainAsset.ETH);
-      setLabelText(`Balance: ${balance} ${network.includes("BITCOIN") ? "BTC" : "ETH"}`);
+      const balance = await getBalance(network, inputValue, getAsset(network));
+      setLabelText(`Balance: ${balance}`);
     } catch (error) {
       setLabelText("Error fetching balance.");
     } finally {
