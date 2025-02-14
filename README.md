@@ -1,12 +1,10 @@
 # tatum-client-app
 
-# `create-preact`
+<img width="691" alt="b-g" src="https://github.com/user-attachments/assets/5927f1a6-7192-4a13-bb3e-0acf3a72bce9" />
 
-<h2 align="center">
-  <img height="256" width="256" src="./src/assets/preact.svg">
-</h2>
 
-<h3 align="center">Get started using Preact and Vite!</h3>
+<img width="693" alt="b-r" src="https://github.com/user-attachments/assets/656becc7-ae8e-48c6-8641-43d1aa704b6e" />
+
 
 ## Environment Variables
 - Duplicate `.env.example` to `.env` and update `VITE_TATUM_API_KEY` with your Tatum API key.
