@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getBalance } from "../../services/tatumService";
 import { isValidBlockchainAddress } from "../../services/validators/addressValidator";
 import { Network } from "@tatumio/tatum";
@@ -13,7 +13,8 @@ function Form() {
   const [network, setNetwork] = useState(CHAIN_NETWORKS[selectedChain][0]); // Default to first network
   const [labelText, setLabelText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false); // Tracks error state
+  const [isError, setIsError] = useState(false);
+  const [isFormReady, setIsFormReady] = useState(false); // Tracks form readiness
 
   // Handle chain selection and update networks
   const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -21,6 +22,11 @@ function Form() {
     setSelectedChain(newChain);
     setNetwork(CHAIN_NETWORKS[newChain][0]); // Default to first network of selected chain
   };
+
+  // Check if the form is ready (valid address & selected network)
+  useEffect(() => {
+    setIsFormReady(isValidBlockchainAddress(inputValue, network));
+  }, [inputValue, network]);
 
   const handleButtonClick = async () => {
     if (!isValidBlockchainAddress(inputValue, network)) {
@@ -85,11 +91,15 @@ function Form() {
           className="w-full p-3 mt-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
         />
 
-        {/* Fetch Balance Button */}
+        {/* Fetch Balance Button (Disabled until form is ready) */}
         <button
           onClick={handleButtonClick}
-          disabled={loading}
-          className="w-full mt-3 p-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 disabled:bg-gray-600"
+          disabled={!isFormReady || loading}
+          className={`w-full mt-3 p-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 ${
+            isFormReady && !loading
+              ? "bg-blue-500 hover:bg-blue-600"
+              : "bg-gray-600 cursor-not-allowed"
+          }`}
         >
           {loading ? "Fetching..." : "Get Balance"}
         </button>
