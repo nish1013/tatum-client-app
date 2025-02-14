@@ -3,8 +3,8 @@ import { getBalance } from "../../services/tatumService";
 import { isValidBlockchainAddress } from "../../services/validators/addressValidator";
 import { Network } from "@tatumio/tatum";
 import { formatNetworkName } from "../../utils/text-util";
-import { CHAIN_NETWORKS } from '../../constants/chain-map';
-import { getAsset } from '../../utils/chain-utils';
+import { CHAIN_NETWORKS } from "../../constants/chain-map";
+import { getAsset } from "../../utils/chain-utils";
 
 function Form() {
   const [inputValue, setInputValue] = useState("");
@@ -13,6 +13,7 @@ function Form() {
   const [network, setNetwork] = useState(CHAIN_NETWORKS[selectedChain][0]); // Default to first network
   const [labelText, setLabelText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false); // Tracks error state
 
   // Handle chain selection and update networks
   const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,17 +25,21 @@ function Form() {
   const handleButtonClick = async () => {
     if (!isValidBlockchainAddress(inputValue, network)) {
       setLabelText(`Invalid address for ${formatNetworkName(network)}`);
+      setIsError(true);
       return;
     }
 
     setLoading(true);
+    setIsError(false);
     setLabelText("Fetching balance...");
 
     try {
       const balance = await getBalance(network, inputValue, getAsset(network));
       setLabelText(`Balance: ${balance}`);
+      setIsError(false);
     } catch (error) {
       setLabelText("Error fetching balance.");
+      setIsError(true);
     } finally {
       setLoading(false);
     }
@@ -89,8 +94,10 @@ function Form() {
           {loading ? "Fetching..." : "Get Balance"}
         </button>
 
-        {/* Display Balance */}
-        <p className="mt-4 text-center text-lg font-semibold text-green-400 shadow-md">{labelText}</p>
+        {/* Display Balance/Error Message */}
+        <p className={`mt-4 text-center text-lg font-semibold shadow-md ${isError ? "text-red-500" : "text-green-400"}`}>
+          {labelText}
+        </p>
       </div>
     </div>
   );
