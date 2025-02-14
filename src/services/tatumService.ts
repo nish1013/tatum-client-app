@@ -1,4 +1,4 @@
-import { Network, TatumSDK, ITatumSdkChain, TatumConfig, Ethereum } from "@tatumio/tatum";
+import { Network, TatumSDK, ITatumSdkChain, TatumConfig, Ethereum, Status } from "@tatumio/tatum";
 import { ChainAsset } from '../constants/chain-asset';
 
 /**
@@ -19,8 +19,14 @@ export const getBalance = async (network: Network, address: string, asset: Chain
   try {
     const tatum = await getTatumInstance(network);
     const balance = await tatum.address.getBalance({ addresses: [address] });
+    console.log(`Fetched ${asset} balance on ${network}:`, balance);
 
-    const balanceData = balance.data.find(item => item.asset === asset);
+    if (!balance?.data?.length || balance?.status !== Status.SUCCESS) {
+      // TODO: improve error message
+      throw new Error(`Failed to fetch ${asset} balance.`);
+    }
+
+    const balanceData = balance?.data?.find(item => item.asset === asset);
 
     return balanceData ? balanceData.balance : "0.00";
   } catch (error) {
