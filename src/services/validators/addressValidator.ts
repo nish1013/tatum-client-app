@@ -1,7 +1,15 @@
+import { Network } from "@tatumio/tatum";
+
 /**
- * Validates if a given string is a valid Ethereum address.
+ * Validates a blockchain address based on the selected network.
  */
-export const isValidEthereumAddress = (address: string): boolean => {
-    return /^0x[a-fA-F0-9]{40}$/.test(address);
-  };
-  
+export const isValidBlockchainAddress = (address: string, network: Network): boolean => {
+  switch (network) {
+    case Network.ETHEREUM:
+    case Network.ETHEREUM_SEPOLIA:
+      return /^0x[a-fA-F0-9]{40}$/.test(address);
+
+    default:
+      throw new Error(`Network ${network} is not supported.`);
+  }
+};
