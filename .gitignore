@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+dist/
+.vite/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Editor files
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+__MACOSX/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Git-related
+.git/
