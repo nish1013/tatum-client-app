@@ -1,15 +1,15 @@
-import { Network, TatumSDK, Ethereum } from "@tatumio/tatum";
-import { ChainAsset } from './constants/chain-asset';
+import { Network, TatumSDK, ITatumSdkChain, TatumConfig, Ethereum } from "@tatumio/tatum";
+import { ChainAsset } from '../constants/chain-asset';
 
 /**
- * Initialize Tatum SDK with a given blockchain network.
+ * Initialize Tatum SDK with the given blockchain network.
  */
-export const getTatumInstance = async (network: Network) => {
-  return await TatumSDK.init<Ethereum>({
+export const getTatumInstance = async <T extends ITatumSdkChain = Ethereum>(network: Network): Promise<T> => {
+  return await TatumSDK.init<T>({
     network,
     apiKey: { v4: import.meta.env.VITE_TATUM_API_KEY },
     verbose: true,
-  });
+  } as TatumConfig);
 };
 
 /**
