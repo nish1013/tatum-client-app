@@ -7,7 +7,7 @@
 
 
 ## Environment Variables
-- Duplicate `.env.example` to `.env` and update `VITE_TATUM_API_KEY` with your Tatum API key.
+- Duplicate `.env.example` to `.env` and update `VITE_TATUM_{CHAIN}_{NETWORK}_API_KEY` with your Tatum API key.
 
 ## Getting Started
 
