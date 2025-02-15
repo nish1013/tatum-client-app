@@ -1,0 +1,34 @@
+import { Controller, Get, Query } from '@nestjs/common';
+import { BalanceService } from './balance.service';
+import { Network } from '@tatumio/tatum';
+import { BadRequestException } from '@nestjs/common';
+import { isValidBlockchainAddress } from '../validators/address-validator';
+
+@Controller('balance')
+export class BalanceController {
+  constructor(private readonly balanceService: BalanceService) {}
+
+  @Get()
+  async getBalance(
+    @Query('network') network: Network,
+    @Query('address') address: string,
+  ) {
+    // Validate network is a valid enum value
+    if (!Object.values(Network).includes(network)) {
+      throw new BadRequestException(`Invalid network: ${network}`);
+    }
+
+    // Validate address based on the selected network
+    if (!isValidBlockchainAddress(address, network)) {
+      throw new BadRequestException(`Invalid address for ${network}`);
+    }
+
+    // Fetch balance
+    return {
+      balance: await this.balanceService.getBalance(
+        network as Network,
+        address,
+      ),
+    };
+  }
+}
