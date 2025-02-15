@@ -36,7 +36,7 @@ export class BalanceService {
    */
   private getApiKeyForNetwork(network: Network): string {
     const envVarName = `TATUM_${network.toUpperCase().replace(/-/g, '_')}_API_KEY`;
-    const apiKey = process.env[envVarName]; // ✅ Changed to process.env (since this is backend)
+    const apiKey = process.env[envVarName];
 
     if (!apiKey) {
       throw new Error(`Missing API key for network: ${network}`);

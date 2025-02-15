@@ -3,8 +3,12 @@ import { BalanceService } from './balance.service';
 import { Network } from '@tatumio/tatum';
 import { BadRequestException } from '@nestjs/common';
 import { isValidBlockchainAddress } from '../validators/address-validator';
+import { BalanceDto } from './models/balance.dto';
 
-@Controller('balance')
+@Controller({
+  path: 'balance',
+  version: '1',
+})
 export class BalanceController {
   constructor(private readonly balanceService: BalanceService) {}
 
@@ -12,7 +16,7 @@ export class BalanceController {
   async getBalance(
     @Query('network') network: Network,
     @Query('address') address: string,
-  ) {
+  ): Promise<BalanceDto> {
     // Validate network is a valid enum value
     if (!Object.values(Network).includes(network)) {
       throw new BadRequestException(`Invalid network: ${network}`);
