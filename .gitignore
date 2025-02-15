@@ -1,9 +1,14 @@
-# Node.js dependencies
-node_modules/
-dist/
-.vite/
+# Frontend: Node.js dependencies
+frontend/node_modules/
+frontend/dist/         # Vite build output
+frontend/.vite/        # Vite cache
+
+# Backend: Node.js dependencies
+backend/node_modules/
 
 # Environment files
+frontend/.env
+backend/.env
 .env
 .env.local
 .env.development
@@ -26,6 +31,10 @@ yarn-error.log*
 # TypeScript build artifacts
 *.tsbuildinfo
 
+# Docker-related (if using Docker)
+docker/data/
+docker/volumes/
+docker-compose.override.yml
+
 # Git-related
 .git/
-.env
