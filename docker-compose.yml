@@ -3,10 +3,19 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    environment:
-      - VITE_TATUM_ETHEREUM_MAINNET_API_KEY=${VITE_TATUM_ETHEREUM_MAINNET_API_KEY}
-      - VITE_TATUM_ETHEREUM_SEPOLIA_API_KEY=${VITE_TATUM_ETHEREUM_SEPOLIA_API_KEY}
     ports:
       - "8080:80"
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
     restart: unless-stopped
 
