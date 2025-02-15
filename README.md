@@ -6,10 +6,7 @@ A **full-stack blockchain balance checker** using **NestJS (Backend)** and **Vit
 
 https://tatum-client-app.vercel.app/
 
-<img width="691" alt="b-g" src="https://github.com/user-attachments/assets/5927f1a6-7192-4a13-bb3e-0acf3a72bce9" />
-
-
-<img width="693" alt="b-r" src="https://github.com/user-attachments/assets/656becc7-ae8e-48c6-8641-43d1aa704b6e" />
+<img width="973" alt="web3-ss" src="https://github.com/user-attachments/assets/6c8acc05-d350-4250-81d5-91a7e5bfba06" />
 
 ## **Environment Variables**
 
