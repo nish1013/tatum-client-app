@@ -1,12 +1,25 @@
 services:
-  app:
-    build: .
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "5173:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - "8080:80"
     environment:
-      - VITE_TATUM_ETHEREUM_MAINNET_API_KEY=${VITE_TATUM_ETHEREUM_MAINNET_API_KEY}
-      - VITE_TATUM_ETHEREUM_SEPOLIA_API_KEY=${VITE_TATUM_ETHEREUM_SEPOLIA_API_KEY}
-    command: ["npm", "run", "dev"]
+      - NODE_ENV=production
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+
