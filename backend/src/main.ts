@@ -10,6 +10,13 @@ async function bootstrap() {
     type: VersioningType.URI, // e.g /v1/
   });
 
+  app.enableCors({
+    origin: ['http://localhost:8080'], // frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
