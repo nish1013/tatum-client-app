@@ -7,15 +7,14 @@
     # Copy package.json and package-lock.json first (for better Docker caching)
     COPY package*.json ./
     
-    # Install dependencies
-    RUN npm install --only=production
+    # Install dependencies (including NestJS CLI)
+    RUN npm install && npm install -g @nestjs/cli
     
     # Copy the full backend source code
     COPY . .
     
     # Build the application
     RUN npm run build
-    
     
     # --- Stage 2: Create a lightweight production image ---
     FROM node:18-alpine
