@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
+    environment:
+      - NODE_ENV=production
     env_file:
       - ./frontend/.env
     restart: unless-stopped
@@ -15,6 +17,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
+    environment:
+      - NODE_ENV=production
     env_file:
       - ./backend/.env
     restart: unless-stopped
