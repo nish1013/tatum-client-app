@@ -11,10 +11,16 @@ https://tatum-client-app.vercel.app/
 ## **Environment Variables**
 
 1. **Duplicate `.env.example` to `.env` in both frontend and backend directories.**
-2. **Populate the following variables:**
-   - `VITE_TATUM_{CHAIN}_{NETWORK}_API_KEY` → **Tatum API Key**
-   - `BACKEND_API` → **Backend URL**
-   - Other necessary config options for frontend/backend.
+2. **Populate all required environment variables** as per the `.env.example` file.
+   - Ensure correct values for **Tatum API keys**, **backend URL**, and other necessary configurations.
+  
+## Getting Tatum API Keys
+
+1. Go to [Tatum Dashboard](https://tatum.io/).
+2. Sign in or create an account.
+3. Navigate to **API Keys** section.
+4. Generate and copy the API key for the required blockchain network.
+5. Update your `.env` file with the key using the format:
 
 ---
 
