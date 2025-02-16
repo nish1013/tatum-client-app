@@ -218,12 +218,6 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lib/common@file:../lib/common":
-  version "1.0.0"
-  resolved "file:../lib/common"
-  dependencies:
-    "@tatumio/tatum" "^4.2.45"
-
 "@preact/preset-vite@^2.9.0":
   version "2.10.1"
   resolved "https://registry.npmjs.org/@preact/preset-vite/-/preset-vite-2.10.1.tgz"

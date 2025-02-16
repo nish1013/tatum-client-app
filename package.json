@@ -1,0 +1,9 @@
+{
+    "scripts": {
+      "build:common": "cd lib/common && npm install && tsc --build",
+      "build:backend": "cd backend && npm install && tsc --build",
+      "build:frontend": "cd frontend && npm install && tsc --build",
+      "build": "npm run build:common && npm run build:backend && npm run build:frontend"
+    }
+  }
+  

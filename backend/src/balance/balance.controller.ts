@@ -2,7 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { BalanceService } from './balance.service';
 import { Network } from '@tatumio/tatum';
 import { BadRequestException } from '@nestjs/common';
-import { isValidBlockchainAddress } from '../validators/address-validator';
+import { isValidBlockchainAddress } from '../../../lib/common/src';
 import { BalanceDto } from './models/balance.dto';
 
 @Controller({

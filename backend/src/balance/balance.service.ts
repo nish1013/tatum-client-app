@@ -6,7 +6,7 @@ import {
   TatumConfig,
   Ethereum,
 } from '@tatumio/tatum';
-import { getAsset } from '../utils/chain-utils';
+import { getAsset } from '../../../lib/common/src';
 
 @Injectable()
 export class BalanceService {
