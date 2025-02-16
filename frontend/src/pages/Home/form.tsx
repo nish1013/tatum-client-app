@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getBalance } from "../../services/tatumService";
-import { isValidBlockchainAddress } from "../../services/validators/addressValidator";
+import { isValidBlockchainAddress } from "@lib/common";
 import { Network } from "@tatumio/tatum";
-import { formatNetworkName } from "../../utils/text-util";
-import { CHAIN_NETWORKS } from "../../constants/chain-map";
-import { getAsset } from "../../utils/chain-utils";
+import { formatNetworkName, CHAIN_NETWORKS, getAsset } from "@lib/common";
 
 function Form() {
   const [inputValue, setInputValue] = useState("");

@@ -7,6 +7,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@lib/common": "file:../lib/common",
 		"@tailwindcss/vite": "^4.0.6",
 		"@tatumio/tatum": "^4.2.0",
 		"mongodb": "^3.0.0",

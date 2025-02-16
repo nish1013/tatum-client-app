@@ -1,9 +1,9 @@
 import { Network } from '@tatumio/tatum';
-import { ChainAsset } from '../constants/chain-asset';
+import { ChainAsset } from '@lib/common';
 
 /**
  * Fetch the balance of a given asset (e.g., ETH, MATIC, BTC) on any supported network by calling the backend API.
- */
+ */ 
 export const getBalance = async (
   network: Network,
   address: string,
