@@ -3,6 +3,7 @@ import { BalanceService } from './balance.service';
 import { Network } from '@tatumio/tatum';
 import { BadRequestException } from '@nestjs/common';
 import { BalanceDto } from './models/balance.dto';
+import { isValidBlockchainAddress } from '@lib/common';
 
 @Controller({
   path: 'balance',
