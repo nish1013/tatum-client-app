@@ -1,9 +1,9 @@
 {
     "scripts": {
       "clean": "rm -rf lib/common/dist backend/dist frontend/dist",
-      "build:common": "cd lib/common && npm install && tsc --build",
-      "build:backend": "cd backend && npm install && npm run clean && tsc --build",
-      "build:frontend": "cd frontend && npm install && npm run clean && tsc --build",
+      "build:common": "cd lib/common && npm install && tsc --build tsconfig.cjs.json && tsc --build tsconfig.esm.json",
+      "build:backend": "cd backend && npm install && npm run clean && nest build",
+      "build:frontend": "cd frontend && npm install && npm run clean && vite build",
       "build": "npm run clean && npm run build:common && npm run build:backend && npm run build:frontend"
     }
   }
