@@ -62,53 +62,49 @@ docker-compose up --build
 docker-compose down
 ```
 
----
-
 ## **Project Structure**
-
+```
 /tatum-client-app
 ├── backend/        # NestJS Backend (Handles API requests)
-│   ├── src/        # Source code
-│   ├── .env.example  # Environment variables example
-│   ├── Dockerfile    # Backend-specific Dockerfile
-│   ├── package.json  # Backend dependencies
-│   ├── tsconfig.json # TypeScript configuration
-│   ├── tsconfig.build.json # TypeScript build config
-│   ├── nest-cli.json  # NestJS CLI configuration
-│   └── dist/         # Compiled backend code (ignored in Git)
+│   ├── src/        
+│   ├── .env.example 
+│   ├── Dockerfile   
+│   ├── package.json  
+│   ├── tsconfig.json 
+│   ├── tsconfig.build.json 
+│   ├── nest-cli.json  
+│   └── dist/        
 │
 ├── frontend/       # Vite + Preact Frontend (UI)
-│   ├── src/        # Source code
-│   ├── .env.example  # Environment variables example
-│   ├── Dockerfile    # Frontend-specific Dockerfile
-│   ├── package.json  # Frontend dependencies
-│   ├── tsconfig.json # TypeScript configuration
-│   ├── vite.config.ts # Vite configuration
-│   ├── tailwind.config.ts # Tailwind CSS configuration
-│   ├── index.html    # Main entry point
-│   └── dist/         # Built frontend (ignored in Git)
+│   ├── src/        
+│   ├── .env.example  
+│   ├── Dockerfile    
+│   ├── package.json  
+│   ├── tsconfig.json 
+│   ├── vite.config.ts 
+│   ├── tailwind.config.ts 
+│   ├── index.html    
+│   └── dist/         
 │
 ├── lib/            # Shared Common Library (Used by Frontend & Backend)
-│   ├── common/     # Shared utilities, interfaces, constants
-│   │   ├── src/    # Source code
-│   │   ├── package.json  # Library package.json (for linking)
-│   │   ├── tsconfig.json  # TypeScript configuration for shared lib
-│   │   ├── tsconfig.cjs.json  # Build config for backend (CJS)
-│   │   ├── tsconfig.esm.json  # Build config for frontend (ESM)
-│   │   ├── dist/   # Compiled shared code (ignored in Git)
+│   ├── common/     
+│   │   ├── src/    
+│   │   ├── package.json  
+│   │   ├── tsconfig.json 
+│   │   ├── tsconfig.cjs.json  
+│   │   ├── tsconfig.esm.json 
+│   │   ├── dist/   
 │
-├── docker/         # Docker-related configuration
-│   ├── docker-compose.yml # Manages multi-container setup
-│   ├── backend.Dockerfile # Dedicated backend Dockerfile (if needed)
-│   ├── frontend.Dockerfile # Dedicated frontend Dockerfile (if needed)
+├── docker-compose.yml 
+
 │
-├── .gitignore      # Ignores node_modules, env files, build output
-├── LICENSE         # Project license
-├── README.md       # Documentation
-├── package.json    # Root dependencies (if any)
-├── tsconfig.json   # Root TypeScript configuration (base)
+├── .gitignore      
+├── LICENSE        
+├── README.md       
+├── package.json    
+├── tsconfig.json   
 
-
+```
 ---
 
 ## **Default Local URLs**
