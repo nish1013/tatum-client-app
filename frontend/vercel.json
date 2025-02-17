@@ -1,0 +1,6 @@
+{
+    "buildCommand": "npm run prebuild && npm run build",
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./src",
+    "installCommand": "npm install"
+  }
+  
