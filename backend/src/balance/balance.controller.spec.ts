@@ -37,7 +37,7 @@ describe('BalanceController', () => {
 
   it('should throw BadRequestException for an invalid network', async () => {
     await expect(
-        balanceController.getBalance(Network.ETHEREUM, 'invalid-address'),
+      balanceController.getBalance(Network.ETHEREUM, 'invalid-address'),
     ).rejects.toThrow(BadRequestException);
   });
 
