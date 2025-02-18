@@ -46,7 +46,7 @@ img:hover {
 	}
 }
 
-..floating-text {
+.floating-text {
   font-family: "Courier New", monospace;
   font-weight: bold;
   opacity: 0.8;

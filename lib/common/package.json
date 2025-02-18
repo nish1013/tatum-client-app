@@ -1,0 +1,15 @@
+{
+  "name": "@lib/common",
+  "version": "1.0.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/cjs/index.d.ts",
+  "scripts": {
+    "build:cjs": "tsc --build tsconfig.cjs.json",
+    "build:esm": "tsc --build tsconfig.esm.json",
+    "build": "npm run build:cjs && npm run build:esm"
+  },
+  "dependencies": {
+    "@tatumio/tatum": "^4.2.45"
+  }
+}

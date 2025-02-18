@@ -62,35 +62,49 @@ docker-compose up --build
 docker-compose down
 ```
 
----
-
 ## **Project Structure**
-
 ```
 /tatum-client-app
 ├── backend/        # NestJS Backend (Handles API requests)
-│   ├── src/
-│   ├── .env.example
-│   ├── Dockerfile
-│   ├── package.json
-│   └── tsconfig.json
+│   ├── src/        
+│   ├── .env.example 
+│   ├── Dockerfile   
+│   ├── package.json  
+│   ├── tsconfig.json 
+│   ├── tsconfig.build.json 
+│   ├── nest-cli.json  
+│   └── dist/        
 │
 ├── frontend/       # Vite + Preact Frontend (UI)
-│   ├── src/
-│   ├── .env.example
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── vite.config.ts
-│   └── tailwind.config.ts
+│   ├── src/        
+│   ├── .env.example  
+│   ├── Dockerfile    
+│   ├── package.json  
+│   ├── tsconfig.json 
+│   ├── vite.config.ts 
+│   ├── tailwind.config.ts 
+│   ├── index.html    
+│   └── dist/         
 │
-├── docker/         # Docker-related config
-│   ├── docker-compose.yml
+├── lib/            # Shared Common Library (Used by Frontend & Backend)
+│   ├── common/     
+│   │   ├── src/    
+│   │   ├── package.json  
+│   │   ├── tsconfig.json 
+│   │   ├── tsconfig.cjs.json  
+│   │   ├── tsconfig.esm.json 
+│   │   ├── dist/   
 │
-├── .gitignore      # Ignores node_modules, env files, build output
-├── LICENSE         # Project license
-├── README.md       # This documentation
-```
+├── docker-compose.yml 
 
+│
+├── .gitignore      
+├── LICENSE        
+├── README.md       
+├── package.json    
+├── tsconfig.json   
+
+```
 ---
 
 ## **Default Local URLs**

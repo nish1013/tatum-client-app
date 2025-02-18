@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { getBalance } from "../../services/tatumService";
-import { isValidBlockchainAddress } from "../../services/validators/addressValidator";
+import { isValidBlockchainAddress } from "@lib/common";
 import { Network } from "@tatumio/tatum";
-import { formatNetworkName } from "../../utils/text-util";
-import { CHAIN_NETWORKS } from "../../constants/chain-map";
-import { getAsset } from "../../utils/chain-utils";
+import { formatNetworkName, CHAIN_NETWORKS, getAsset } from "@lib/common";
 
 function Form() {
   const [inputValue, setInputValue] = useState("");
@@ -18,7 +16,7 @@ function Form() {
 
   // Handle chain selection and update networks
   const handleChainChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newChain = e.target.value;
+    const newChain = (e.target as HTMLSelectElement).value;
     setSelectedChain(newChain);
     setNetwork(CHAIN_NETWORKS[newChain][0]); // Default to first network of selected chain
   };
@@ -72,7 +70,7 @@ function Form() {
         <label className="text-sm font-semibold text-gray-400 mt-3 block">Select Network</label>
         <select
           value={network}
-          onChange={(e) => setNetwork(e.target.value as Network)}
+          onChange={(e) => setNetwork((e.target as HTMLSelectElement).value as Network)}
           className="w-full p-3 mt-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
         >
           {CHAIN_NETWORKS[selectedChain].map((net) => (
@@ -86,7 +84,7 @@ function Form() {
         <input
           type="text"
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue((e.target as HTMLSelectElement).value)}
           placeholder={`Enter ${formatNetworkName(network)} wallet address`}
           className="w-full p-3 mt-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
         />

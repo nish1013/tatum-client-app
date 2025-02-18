@@ -2,11 +2,14 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"prebuild": "cd ../lib/common && npm install && npm run build",
 		"dev": "vite",
 		"build": "vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"clean": "rm -rf dist"
 	},
 	"dependencies": {
+		"@lib/common": "file:../lib/common",
 		"@tailwindcss/vite": "^4.0.6",
 		"@tatumio/tatum": "^4.2.0",
 		"mongodb": "^3.0.0",

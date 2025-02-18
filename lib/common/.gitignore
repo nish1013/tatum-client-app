@@ -1,0 +1,5 @@
+dist/
+
+# Build artifacts
+*.log
+*.tsbuildinfo
