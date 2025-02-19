@@ -9,6 +9,8 @@ describe('Address Validator', () => {
 
   it('should reject an invalid Ethereum address', () => {
     const invalidAddress = 'invalid-address';
-    expect(isValidBlockchainAddress(invalidAddress, Network.ETHEREUM)).toBe(false);
+    expect(isValidBlockchainAddress(invalidAddress, Network.ETHEREUM)).toBe(
+      false
+    );
   });
 });

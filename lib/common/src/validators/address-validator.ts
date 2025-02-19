@@ -5,7 +5,7 @@ import { Network } from '@tatumio/tatum';
  */
 export const isValidBlockchainAddress = (
   address: string,
-  network: Network,
+  network: Network
 ): boolean => {
   switch (network) {
     case Network.ETHEREUM:
