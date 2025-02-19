@@ -26,6 +26,11 @@ https://tatum-client-app.vercel.app/
 
 ## **Getting Started (Without Docker)**
 
+### **Build project including libs**
+```sh
+npm run build
+```
+
 ### **Frontend**
 ```sh
 cd frontend
