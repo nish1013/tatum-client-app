@@ -50,63 +50,60 @@ function Form() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white p-6">
-      <div className="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700">
-        {/* Chain Selection */}
-        <label className="text-sm font-semibold text-gray-400">Select Chain</label>
-        <select
-          value={selectedChain}
-          onChange={handleChainChange}
-          className="w-full p-3 mt-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
-        >
-          {chains.map((chain) => (
-            <option key={chain} value={chain}>
-              {chain}
-            </option>
-          ))}
-        </select>
+    <div className="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-2xl border border-gray-700">
+      {/* Chain Selection */}
+      <label className="text-sm font-semibold text-gray-400">Select Chain</label>
+      <select
+        value={selectedChain}
+        onChange={handleChainChange}
+        className="w-full p-3 mt-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
+      >
+        {chains.map((chain) => (
+          <option key={chain} value={chain}>
+            {chain}
+          </option>
+        ))}
+      </select>
 
-        {/* Network Selection */}
-        <label className="text-sm font-semibold text-gray-400 mt-3 block">Select Network</label>
-        <select
-          value={network}
-          onChange={(e) => setNetwork((e.target as HTMLSelectElement).value as Network)}
-          className="w-full p-3 mt-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
-        >
-          {CHAIN_NETWORKS[selectedChain].map((net) => (
-            <option key={net} value={net}>
-              {formatNetworkName(net)}
-            </option>
-          ))}
-        </select>
+      {/* Network Selection */}
+      <label className="text-sm font-semibold text-gray-400 mt-3 block">Select Network</label>
+      <select
+        value={network}
+        onChange={(e) => setNetwork((e.target as HTMLSelectElement).value as Network)}
+        className="w-full p-3 mt-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
+      >
+        {CHAIN_NETWORKS[selectedChain].map((net) => (
+          <option key={net} value={net}>
+            {formatNetworkName(net)}
+          </option>
+        ))}
+      </select>
 
-        {/* Input Field for Address */}
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue((e.target as HTMLSelectElement).value)}
-          placeholder={`Enter ${formatNetworkName(network)} wallet address`}
-          className="w-full p-3 mt-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
-        />
+      {/* Input Field for Address */}
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue((e.target as HTMLSelectElement).value)}
+        placeholder={`Enter ${formatNetworkName(network)} wallet address`}
+        className="w-full p-3 mt-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
+      />
 
-        {/* Fetch Balance Button (Disabled until form is ready) */}
-        <button
-          onClick={handleButtonClick}
-          disabled={!isFormReady || loading}
-          className={`w-full mt-3 p-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 ${
-            isFormReady && !loading
-              ? "bg-blue-500 hover:bg-blue-600"
-              : "bg-gray-600 cursor-not-allowed"
+      {/* Fetch Balance Button (Disabled until form is ready) */}
+      <button
+        onClick={handleButtonClick}
+        disabled={!isFormReady || loading}
+        className={`w-full mt-3 p-3 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 ${isFormReady && !loading
+            ? "bg-blue-500 hover:bg-blue-600"
+            : "bg-gray-600 cursor-not-allowed"
           }`}
-        >
-          {loading ? "Fetching..." : "Get Balance"}
-        </button>
+      >
+        {loading ? "Fetching..." : "Get Balance"}
+      </button>
 
-        {/* Display Balance/Error Message */}
-        <p className={`mt-4 text-center text-lg font-semibold shadow-md ${isError ? "text-red-500" : "text-green-400"}`}>
-          {labelText}
-        </p>
-      </div>
+      {/* Display Balance/Error Message */}
+      <p className={`mt-4 text-center text-lg font-semibold shadow-md ${isError ? "text-red-500" : "text-green-400"}`}>
+        {labelText}
+      </p>
     </div>
   );
 }
