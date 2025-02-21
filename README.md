@@ -4,7 +4,7 @@ A **full-stack blockchain balance checker** using **NestJS (Backend)** and **Vit
 
 ## Deployed App
 
-https://tatum-client-app.vercel.app/
+https://wallet.satharasinghe.com
 
 
 <img width="1144" alt="Screenshot 2025-02-20 at 21 05 42" src="https://github.com/user-attachments/assets/9e47b841-6c73-450c-8b4f-a16c7804181d" />
