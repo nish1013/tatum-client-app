@@ -52,9 +52,7 @@ describe('BalanceService', () => {
         '0x1234567890abcdef',
       );
       expect(balance).toBe('100.50');
-      expect(tatumService.getTatumInstance).toHaveBeenCalledWith(
-        Network.ETHEREUM,
-      );
+      expect(tatumService.getInstance).toHaveBeenCalledWith(Network.ETHEREUM);
     });
 
     it('should return "0.00" if no matching asset is found', async () => {

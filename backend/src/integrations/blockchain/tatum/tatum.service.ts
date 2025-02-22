@@ -6,9 +6,11 @@ import {
   TatumConfig,
   TatumSDK,
 } from '@tatumio/tatum';
+import { BlockchainNetwork } from '../../../core/blockchain/interfaces/blockchain.network';
+import { BlockchainService } from '../../../core/blockchain/services/
 
 @Injectable()
-export class TatumService {
+export class TatumService implements BlockchainService {
   private tatumInstances: Record<string, ITatumSdkChain> = {};
 
   constructor() {}
@@ -17,13 +19,13 @@ export class TatumService {
    * Initialize Tatum SDK with the given blockchain network.
    * Uses caching to prevent multiple SDK instances for the same network.
    */
-  public async getTatumInstance<T extends ITatumSdkChain = Ethereum>(
-    network: Network,
+  public async getInstance<T extends ITatumSdkChain = Ethereum>(
+    network: BlockchainNetwork,
   ): Promise<T> {
     if (!this.tatumInstances[network]) {
       this.tatumInstances[network] = await TatumSDK.init<T>({
         network,
-        apiKey: { v4: this.getApiKeyForNetwork(network) },
+        apiKey: { v4: this.getApiKey(network) },
         verbose: true,
       } as TatumConfig);
     }
@@ -34,7 +36,7 @@ export class TatumService {
   /**
    * Retrieves the appropriate API key based on the selected network.
    */
-  public getApiKeyForNetwork(network: Network): string {
+  public getApiKey(network: Network): string {
     const envVarName = `TATUM_${network.toUpperCase().replace(/-/g, '_')}_API_KEY`;
     const apiKey = process.env[envVarName];
 

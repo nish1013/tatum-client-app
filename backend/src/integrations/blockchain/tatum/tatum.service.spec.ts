@@ -31,13 +31,13 @@ describe('TatumService', () => {
 
   describe('getApiKeyForNetwork', () => {
     it('should return the API key for the given network', () => {
-      const apiKey = service.getApiKeyForNetwork(Network.ETHEREUM);
+      const apiKey = service.getApiKey(Network.ETHEREUM);
       expect(apiKey).toBe('test-api-key');
     });
 
     it('should throw an error if the API key is missing', () => {
       delete process.env.TATUM_ETHEREUM_MAINNET_API_KEY;
-      expect(() => service.getApiKeyForNetwork(Network.ETHEREUM)).toThrow(
+      expect(() => service.getApiKey(Network.ETHEREUM)).toThrow(
         'Missing API key for network: ethereum',
       );
     });
@@ -51,9 +51,7 @@ describe('TatumService', () => {
 
       jest.spyOn(TatumSDK, 'init').mockResolvedValue(mockTatumInstance);
 
-      const instance = await service.getTatumInstance<Ethereum>(
-        Network.ETHEREUM,
-      );
+      const instance = await service.getInstance<Ethereum>(Network.ETHEREUM);
       expect(instance).toBeDefined();
       expect(TatumSDK.init).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -70,9 +68,7 @@ describe('TatumService', () => {
       } as unknown as ITatumSdkChain;
 
       service['tatumInstances'][Network.ETHEREUM] = mockTatumInstance;
-      const instance = await service.getTatumInstance<Ethereum>(
-        Network.ETHEREUM,
-      );
+      const instance = await service.getInstance<Ethereum>(Network.ETHEREUM);
       expect(instance).toBe(mockTatumInstance);
       expect(TatumSDK.init).not.toHaveBeenCalled();
     });
@@ -81,7 +77,7 @@ describe('TatumService', () => {
       delete process.env.TATUM_ETHEREUM_MAINNET_API_KEY;
 
       await expect(
-        service.getTatumInstance<Ethereum>(Network.ETHEREUM),
+        service.getInstance<Ethereum>(Network.ETHEREUM),
       ).rejects.toThrow('Missing API key for network: ethereum');
     });
   });

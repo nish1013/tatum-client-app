@@ -17,7 +17,7 @@ export class BalanceService {
    * Fetches the balance of the given address for the selected network.
    */
   async getBalance(network: Network, address: string): Promise<string> {
-    const tatum = await this.tatumService.getTatumInstance(network);
+    const tatum = await this.tatumService.getInstance(network);
     const asset = getAsset(network);
 
     try {
