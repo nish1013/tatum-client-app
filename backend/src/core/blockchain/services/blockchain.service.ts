@@ -7,5 +7,8 @@ export interface BlockchainService {
     network: BlockchainNetwork,
   ): Promise<T>;
   getApiKey(network: BlockchainNetwork): string;
-  getBalance(address: string): Promise<BlockchainBalance>;
+  getBalance(
+    network: BlockchainNetwork,
+    address: string,
+  ): Promise<BlockchainBalance>;
 }
