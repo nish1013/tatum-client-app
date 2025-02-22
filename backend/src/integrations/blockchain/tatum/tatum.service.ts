@@ -6,8 +6,8 @@ import {
   TatumConfig,
   TatumSDK,
 } from '@tatumio/tatum';
-import { BlockchainNetwork } from '../../../core/blockchain/interfaces/blockchain.network';
-import { BlockchainService } from '../../../core/blockchain/services/
+
+import { BlockchainService, BlockchainNetwork } from '../../../core';
 
 @Injectable()
 export class TatumService implements BlockchainService {
