@@ -3,10 +3,12 @@ import { BalanceModule } from './balance/balance.module';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
     BalanceModule,
+    HealthModule,
     ConfigModule.forRoot({
       isGlobal: true, // Makes .env available everywhere
     }),
