@@ -1,15 +1,15 @@
-import { Network } from '@tatumio/tatum';
+import { BlockchainNetwork } from '../interfaces';
 
 /**
  * Validates a blockchain address based on the selected network.
  */
 export const isValidBlockchainAddress = (
   address: string,
-  network: Network
+  network: BlockchainNetwork,
 ): boolean => {
   switch (network) {
-    case Network.ETHEREUM:
-    case Network.ETHEREUM_SEPOLIA:
+    case BlockchainNetwork.ETHEREUM:
+    case BlockchainNetwork.ETHEREUM_SEPOLIA:
       return /^0x[a-fA-F0-9]{40}$/.test(address);
 
     default:
