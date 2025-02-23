@@ -49,9 +49,9 @@ describe('BlockchainServiceFactory', () => {
   });
 
   it('should throw an error for unsupported providers', () => {
-    expect(() =>
-      factory.create('unsupported' as BlockchainProvider),
-    ).toThrow('Unsupported blockchain provider: unsupported');
+    expect(() => factory.create('unsupported' as BlockchainProvider)).toThrow(
+      'Unsupported blockchain provider: unsupported',
+    );
   });
 
   it('should log the selected provider', () => {
