@@ -5,7 +5,7 @@ import { BlockchainNetwork } from '../interfaces';
  */
 export const isValidBlockchainAddress = (
   address: string,
-  network: BlockchainNetwork,
+  network: BlockchainNetwork
 ): boolean => {
   switch (network) {
     case BlockchainNetwork.ETHEREUM:
