@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
+  BlockchainBalance,
   BlockchainNetwork,
   BlockchainService,
   BlockchainServiceFactory,
 } from '../core';
+import { Block } from '@tatumio/tatum/dist/src/api/api.dto';
 
 @Injectable()
 export class BalanceService {
@@ -18,11 +20,11 @@ export class BalanceService {
   async getBalance(
     network: BlockchainNetwork,
     address: string,
-  ): Promise<string> {
+  ): Promise<BlockchainBalance> {
     try {
       const balance = await this.blockchainService.getBalance(network, address);
 
-      return balance.balance.toString();
+      return balance;
     } catch (error) {
       console.error(`Error fetching balance for ${network}:`, error);
       throw new Error('Failed to fetch balance.');
