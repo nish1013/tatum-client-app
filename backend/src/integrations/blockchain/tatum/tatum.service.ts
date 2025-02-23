@@ -39,7 +39,7 @@ export class TatumService implements BlockchainService {
       const balance = await tatum.address.getBalance({ addresses: [address] });
       const balanceData = balance.data.find((item) => item.asset === asset);
       return {
-        balance: new BigNumber(balanceData ? balanceData.balance : '0.00'),
+        balance: new BigNumber(balanceData ? balanceData.balance : '0'),
       };
     } catch (error) {
       console.error(`Error fetching balance for ${network}:`, error);
