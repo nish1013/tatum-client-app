@@ -18,7 +18,7 @@ export class BlockchainServiceFactory {
       case BlockchainProvider.TATUM:
         return this.tatumService;
       default:
-        throw new Error(`Unsupported blockchain provider: ${provider}`);
+        throw new Error(`Unsupported blockchain provider: ${selectedProvider}`);
     }
   }
 }
