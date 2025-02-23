@@ -9,8 +9,12 @@ export class BlockchainServiceFactory {
     @Inject(TatumService) private readonly tatumService: BlockchainService,
   ) {}
 
-  create(provider: BlockchainProvider): BlockchainService {
-    switch (provider) {
+  public create(provider?: BlockchainProvider): BlockchainService {
+    const selectedProvider =
+      provider || process.env.BLOCKCHAIN_PROVIDER || BlockchainProvider.TATUM;
+    console.log(`Selected blockchain provider: ${selectedProvider}`);
+
+    switch (selectedProvider) {
       case BlockchainProvider.TATUM:
         return this.tatumService;
       default:

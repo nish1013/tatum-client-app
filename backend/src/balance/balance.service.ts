@@ -1,29 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import {
-  TatumSDK,
-  Network,
-  ITatumSdkChain,
-  TatumConfig,
-  Ethereum,
-} from '@tatumio/tatum';
-import { getAsset } from '@lib/common';
-import { TatumService } from '../integrations';
+  BlockchainNetwork,
+  BlockchainService,
+  BlockchainServiceFactory,
+} from '../core';
 
 @Injectable()
 export class BalanceService {
-  constructor(private readonly tatumService: TatumService) {}
+  private blockchainService: BlockchainService;
+  constructor(private readonly factory: BlockchainServiceFactory) {
+    this.blockchainService = this.factory.create();
+  }
 
   /**
    * Fetches the balance of the given address for the selected network.
    */
-  async getBalance(network: Network, address: string): Promise<string> {
-    const tatum = await this.tatumService.getInstance(network);
-    const asset = getAsset(network);
-
+  async getBalance(
+    network: BlockchainNetwork,
+    address: string,
+  ): Promise<string> {
     try {
-      const balance = await tatum.address.getBalance({ addresses: [address] });
-      const balanceData = balance.data.find((item) => item.asset === asset);
-      return balanceData ? balanceData.balance : '0.00';
+      const balance = await this.blockchainService.getBalance(network, address);
+
+      return balance.balance.toString();
     } catch (error) {
       console.error(`Error fetching balance for ${network}:`, error);
       throw new Error('Failed to fetch balance.');
