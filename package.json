@@ -5,7 +5,14 @@
       "build:backend": "cd backend && npm install && npm run clean && npm run build",
       "build:frontend": "cd frontend && npm install && npm run clean && npm run build",
       "build": "npm run clean && npm run build:common && npm run build:backend && npm run build:frontend",
-      "format": "cd lib/common && npm run format && cd ../.. && cd backend && npm run format && cd ../.. && cd frontend && npm run format"
+      "format:common": "cd lib/common && npm run format",
+      "format:backend": "cd backend && npm run format",
+      "format:frontend": "cd frontend && npm run format",
+      "format": "npm run format:common && npm run format:backend && npm run format:frontend",
+      "test:common": "cd lib/common && npm install && npm run test",
+      "test:backend": "cd backend && npm install && npm run test",
+      "test:frontend": "cd frontend && npm install && npm run test",
+      "test": "npm run test:common && npm run test:backend && npm run test:frontend"
     }
   }
   

@@ -677,6 +677,11 @@ preact@^10.0.0, preact@^10.22.1, preact@^10.4.0, preact@>=10:
   resolved "https://registry.npmjs.org/preact/-/preact-10.25.4.tgz"
   integrity sha512-jLdZDb+Q+odkHJ+MpW/9U5cODzqnB+fy2EiHSZES7ldV5LK7yjlVzTp7R8Xy6W6y75kfK8iWYtFVH7lvjwrCMA==
 
+prettier@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.5.2.tgz"
+  integrity sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg==
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz"

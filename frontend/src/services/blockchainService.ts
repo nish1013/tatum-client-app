@@ -1,8 +1,8 @@
-import { ChainAsset, BlockchainNetwork} from '@lib/common';
+import { ChainAsset, BlockchainNetwork } from '@lib/common';
 
 /**
  * Fetch the balance of a given asset (e.g., ETH, MATIC, BTC) on any supported network by calling the backend API.
- */ 
+ */
 export const getBalance = async (
   network: BlockchainNetwork,
   address: string,
