@@ -7,13 +7,8 @@ import {
   TatumSDK,
 } from '@tatumio/tatum';
 
-import {
-  BlockchainService,
-  BlockchainNetwork,
-  BlockchainBalance,
-} from '../../../core';
-import { getAsset } from '@lib/common';
-import { Block } from '@tatumio/tatum/dist/src/api/api.dto';
+import { BlockchainService, BlockchainBalance } from '../../../core';
+import { getAsset, BlockchainNetwork } from '@lib/common';
 import BigNumber from 'bignumber.js';
 
 @Injectable()
