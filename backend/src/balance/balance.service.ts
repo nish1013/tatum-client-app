@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {
   BlockchainBalance,
-  BlockchainNetwork,
   BlockchainService,
   BlockchainServiceFactory,
 } from '../core';
-import { Block } from '@tatumio/tatum/dist/src/api/api.dto';
+import { BlockchainNetwork } from '@lib/common';
 
 @Injectable()
 export class BalanceService {

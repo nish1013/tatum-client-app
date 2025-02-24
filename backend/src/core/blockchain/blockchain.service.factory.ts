@@ -5,9 +5,7 @@ import { BlockchainService } from './services/blockchain.service';
 
 @Injectable()
 export class BlockchainServiceFactory {
-  constructor(
-    @Inject(TatumService) private readonly tatumService: BlockchainService,
-  ) {}
+  constructor(private readonly tatumService: TatumService) {}
 
   public create(provider?: BlockchainProvider): BlockchainService {
     const selectedProvider =
