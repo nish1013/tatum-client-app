@@ -1,5 +1,5 @@
 import { BlockchainBalance } from '../interfaces/blockchain.balance';
-import { BlockchainNetwork } from '../interfaces/blockchain.network';
+import { BlockchainNetwork } from '@lib/common';
 
 export interface BlockchainService {
   getBalance(
