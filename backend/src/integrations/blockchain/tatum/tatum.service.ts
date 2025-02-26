@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   Ethereum,
+  Solana,
+  Bitcoin,
   ITatumSdkChain,
   Network,
   TatumConfig,
@@ -11,9 +13,17 @@ import { BlockchainService, BlockchainBalance } from '../../../core';
 import { getAsset, BlockchainNetwork } from '@lib/common';
 import BigNumber from 'bignumber.js';
 
+const SUPPORTED_NETWORKS: BlockchainNetwork[] = [
+  BlockchainNetwork.ETHEREUM,
+  BlockchainNetwork.ETHEREUM_SEPOLIA,
+  BlockchainNetwork.SOLANA,
+  BlockchainNetwork.BITCOIN,
+];
+
 @Injectable()
 export class TatumService implements BlockchainService {
   private tatumInstances: Record<string, ITatumSdkChain> = {};
+  private logger = new Logger(TatumService.name);
 
   constructor() {}
 
@@ -27,25 +37,32 @@ export class TatumService implements BlockchainService {
     network: BlockchainNetwork,
     address: string,
   ): Promise<BlockchainBalance> {
-    const tatum = await this.getInstance(network);
+    if (!SUPPORTED_NETWORKS.includes(network)) {
+      this.logger.error(`Network ${network} is not supported.`);
+      throw new Error(`Network ${network} is not supported.`);
+    }
+
+    const tatum = await this.getInstance<Ethereum | Solana | Bitcoin>(network);
     const asset = getAsset(network);
 
     try {
       const balance = await tatum.address.getBalance({ addresses: [address] });
       const balanceData = balance.data.find((item) => item.asset === asset);
+
       return {
         balance: new BigNumber(balanceData ? balanceData.balance : '0'),
       };
     } catch (error) {
-      console.error(`Error fetching balance for ${network}:`, error);
+      this.logger.error(`Error fetching balance for ${network}:`, error);
       throw new Error('Failed to fetch balance.');
     }
   }
+
   /**
    * Initialize Tatum SDK with the given blockchain network.
    * Uses caching to prevent multiple SDK instances for the same network.
    */
-  private async getInstance<T extends ITatumSdkChain = Ethereum>(
+  private async getInstance<T extends ITatumSdkChain>(
     network: BlockchainNetwork,
   ): Promise<T> {
     if (!this.tatumInstances[network]) {
