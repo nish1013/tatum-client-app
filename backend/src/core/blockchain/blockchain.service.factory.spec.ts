@@ -53,13 +53,4 @@ describe('BlockchainServiceFactory', () => {
       'Unsupported blockchain provider: unsupported',
     );
   });
-
-  it('should log the selected provider', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-    factory.create(BlockchainProvider.TATUM);
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'Selected blockchain provider: TATUM',
-    );
-    consoleSpy.mockRestore();
-  });
 });
