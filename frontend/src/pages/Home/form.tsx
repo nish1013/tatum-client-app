@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getBalance } from "../../services/tatumService";
-import { isValidBlockchainAddress } from "@lib/common";
-import { Network } from "@tatumio/tatum";
+import { getBalance } from "../../services/blockchainService";
+import { BlockchainNetwork, isValidBlockchainAddress } from "@lib/common";
 import { formatNetworkName, CHAIN_NETWORKS, getAsset } from "@lib/common";
 
 function Form() {
@@ -69,7 +68,7 @@ function Form() {
       <label className="text-sm font-semibold text-gray-400 mt-3 block">Select Network</label>
       <select
         value={network}
-        onChange={(e) => setNetwork((e.target as HTMLSelectElement).value as Network)}
+        onChange={(e) => setNetwork((e.target as HTMLSelectElement).value as BlockchainNetwork)}
         className="w-full p-3 mt-1 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring focus:ring-blue-500"
       >
         {CHAIN_NETWORKS[selectedChain].map((net) => (

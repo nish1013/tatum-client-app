@@ -1,40 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BalanceService } from './balance.service';
-import { TatumService } from '../integrations';
-import { Network } from '@tatumio/tatum';
-import { getAsset } from '@lib/common';
-
-jest.mock('@tatumio/tatum');
-jest.mock('@lib/common', () => ({
-  getAsset: jest.fn(),
-}));
+import { BlockchainServiceFactory } from '../core/blockchain/blockchain.service.factory';
+import { BlockchainService } from '../core';
+import { BlockchainBalance } from '../core/blockchain/interfaces/blockchain.balance';
+import BigNumber from 'bignumber.js';
+import { BlockchainNetwork } from '@lib/common';
 
 describe('BalanceService', () => {
   let service: BalanceService;
-  let tatumService: TatumService;
-  let tatumInstance: any;
+  let factory: BlockchainServiceFactory;
+  let mockBlockchainService: jest.Mocked<BlockchainService>;
 
   beforeEach(async () => {
+    mockBlockchainService = {
+      getBalance: jest.fn(),
+    } as unknown as jest.Mocked<BlockchainService>;
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [BalanceService, TatumService],
+      providers: [
+        BalanceService,
+        {
+          provide: BlockchainServiceFactory,
+          useValue: {
+            create: jest.fn().mockReturnValue(mockBlockchainService),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<BalanceService>(BalanceService);
-    tatumService = module.get<TatumService>(TatumService);
-
-    tatumInstance = {
-      address: {
-        getBalance: jest.fn(),
-      },
-    };
-
-    jest
-      .spyOn(tatumService, 'getTatumInstance')
-      .mockResolvedValue(tatumInstance);
-
-    (getAsset as jest.Mock).mockImplementation((network) => {
-      return network === Network.ETHEREUM ? 'ETH' : 'BTC';
-    });
+    factory = module.get<BlockchainServiceFactory>(BlockchainServiceFactory);
   });
 
   afterEach(() => {
@@ -43,49 +38,43 @@ describe('BalanceService', () => {
 
   describe('getBalance', () => {
     it('should return the correct balance when API response is valid', async () => {
-      tatumInstance.address.getBalance.mockResolvedValue({
-        data: [{ asset: 'ETH', balance: '100.50' }],
-      });
+      mockBlockchainService.getBalance.mockResolvedValue({
+        balance: new BigNumber('0.003634865693567631'),
+      } as BlockchainBalance);
 
       const balance = await service.getBalance(
-        Network.ETHEREUM,
+        BlockchainNetwork.ETHEREUM,
         '0x1234567890abcdef',
       );
-      expect(balance).toBe('100.50');
-      expect(tatumService.getTatumInstance).toHaveBeenCalledWith(
-        Network.ETHEREUM,
+
+      expect(balance.balance.isEqualTo('0.003634865693567631')).toBe(true);
+      expect(mockBlockchainService.getBalance).toHaveBeenCalledWith(
+        BlockchainNetwork.ETHEREUM,
+        '0x1234567890abcdef',
       );
     });
 
-    it('should return "0.00" if no matching asset is found', async () => {
-      tatumInstance.address.getBalance.mockResolvedValue({
-        data: [{ asset: 'BTC', balance: '5.00' }],
-      });
+    it('should return 0 if no balance is found', async () => {
+      mockBlockchainService.getBalance.mockResolvedValue({
+        balance: new BigNumber('0'),
+      } as BlockchainBalance);
 
       const balance = await service.getBalance(
-        Network.ETHEREUM,
+        BlockchainNetwork.ETHEREUM,
         '0x1234567890abcdef',
       );
-      expect(balance).toBe('0.00');
+
+      expect(balance.balance.isZero()).toBe(true);
     });
 
     it('should throw an error if the API call fails', async () => {
-      tatumInstance.address.getBalance.mockRejectedValue(
+      mockBlockchainService.getBalance.mockRejectedValue(
         new Error('API Error'),
       );
 
       await expect(
-        service.getBalance(Network.ETHEREUM, '0x1234567890abcdef'),
+        service.getBalance(BlockchainNetwork.ETHEREUM, '0x1234567890abcdef'),
       ).rejects.toThrow('Failed to fetch balance.');
-    });
-
-    it('should call getAsset with the correct network', async () => {
-      tatumInstance.address.getBalance.mockResolvedValue({
-        data: [{ asset: 'ETH', balance: '100.50' }],
-      });
-
-      await service.getBalance(Network.ETHEREUM, '0x1234567890abcdef');
-      expect(getAsset).toHaveBeenCalledWith(Network.ETHEREUM);
     });
   });
 });

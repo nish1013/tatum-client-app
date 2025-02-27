@@ -1,5 +1,6 @@
 import { Network } from '@tatumio/tatum';
 import { ChainAsset } from '../constants/chain-asset';
+import { BlockchainNetwork } from '../interfaces';
 
 /**
  * Determines the correct asset symbol for a given blockchain network.
@@ -11,10 +12,10 @@ import { ChainAsset } from '../constants/chain-asset';
  * @returns The corresponding asset symbol.
  * @throws Error if the network is not supported.
  */
-export const getAsset = (network: Network): ChainAsset => {
+export const getAsset = (network: BlockchainNetwork): ChainAsset => {
   switch (network) {
-    case Network.ETHEREUM:
-    case Network.ETHEREUM_SEPOLIA:
+    case BlockchainNetwork.ETHEREUM:
+    case BlockchainNetwork.ETHEREUM_SEPOLIA:
       return ChainAsset.ETH;
 
     default:

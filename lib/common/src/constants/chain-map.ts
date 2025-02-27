@@ -1,8 +1,7 @@
-import { Network } from '@tatumio/tatum';
-
+import { BlockchainNetwork } from '../interfaces/blockchain.network';
 // TODO: Add more networks and chains as needed
 // currently only Ethereum and Ethereum Sepolia are supported
 // due to the api keys limitation
 export const CHAIN_NETWORKS = {
-  Ethereum: [Network.ETHEREUM, Network.ETHEREUM_SEPOLIA],
+  Ethereum: [BlockchainNetwork.ETHEREUM, BlockchainNetwork.ETHEREUM_SEPOLIA],
 };

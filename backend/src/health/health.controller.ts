@@ -19,7 +19,7 @@ export class HealthController {
   @HealthCheck()
   check() {
     return this.healthService.check([
-      // TODO: Add taum health check when moving to production with paid plan
+      // TODO: Add tatum health check when moving to production with paid plan
       // need verification of the health check endpoint
       // () => this.httpHealthIndicator.pingCheck('tatum', 'https://taum.io/v4/health'),
     ]);

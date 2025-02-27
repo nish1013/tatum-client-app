@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TatumService } from './tatum.service';
-import { Ethereum, ITatumSdkChain, Network, TatumSDK } from '@tatumio/tatum';
+import { ITatumSdkChain, Network, TatumSDK } from '@tatumio/tatum';
+import { BlockchainBalance } from '../../../core';
+import BigNumber from 'bignumber.js';
 
 jest.mock('@tatumio/tatum', () => ({
   ...jest.requireActual('@tatumio/tatum'),
@@ -11,10 +13,16 @@ jest.mock('@tatumio/tatum', () => ({
 
 describe('TatumService', () => {
   let service: TatumService;
+  const mockTatumInstance = {
+    address: {
+      getBalance: jest.fn(),
+    },
+  };
 
   beforeEach(async () => {
-    // Set environment variable before each test
     process.env.TATUM_ETHEREUM_MAINNET_API_KEY = 'test-api-key';
+
+    (TatumSDK.init as jest.Mock).mockResolvedValue(mockTatumInstance);
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [TatumService],
@@ -25,64 +33,55 @@ describe('TatumService', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-    jest.restoreAllMocks();
     delete process.env.TATUM_ETHEREUM_MAINNET_API_KEY;
   });
 
-  describe('getApiKeyForNetwork', () => {
-    it('should return the API key for the given network', () => {
-      const apiKey = service.getApiKeyForNetwork(Network.ETHEREUM);
-      expect(apiKey).toBe('test-api-key');
-    });
+  describe('getBalance', () => {
+    it('should return balance for a valid address', async () => {
+      mockTatumInstance.address.getBalance.mockResolvedValue({
+        data: [{ asset: 'ETH', balance: '100.50' }],
+      });
 
-    it('should throw an error if the API key is missing', () => {
-      delete process.env.TATUM_ETHEREUM_MAINNET_API_KEY;
-      expect(() => service.getApiKeyForNetwork(Network.ETHEREUM)).toThrow(
-        'Missing API key for network: ethereum',
-      );
-    });
-  });
-
-  describe('getTatumInstance', () => {
-    it('should return a Tatum instance for a given network', async () => {
-      const mockTatumInstance: ITatumSdkChain = {
-        address: { getBalance: jest.fn() },
-      } as unknown as ITatumSdkChain;
-
-      jest.spyOn(TatumSDK, 'init').mockResolvedValue(mockTatumInstance);
-
-      const instance = await service.getTatumInstance<Ethereum>(
+      const balance: BlockchainBalance = await service.getBalance(
         Network.ETHEREUM,
+        '0x1234567890abcdef',
       );
-      expect(instance).toBeDefined();
-      expect(TatumSDK.init).toHaveBeenCalledWith(
-        expect.objectContaining({
-          network: Network.ETHEREUM,
-          apiKey: { v4: 'test-api-key' },
-          verbose: true,
-        }),
-      );
+
+      expect(balance).toEqual({ balance: new BigNumber('100.50') });
+      expect(mockTatumInstance.address.getBalance).toHaveBeenCalledWith({
+        addresses: ['0x1234567890abcdef'],
+      });
     });
 
-    it('should reuse an existing Tatum instance if available', async () => {
-      const mockTatumInstance: ITatumSdkChain = {
-        address: { getBalance: jest.fn() },
-      } as unknown as ITatumSdkChain;
+    it('should return 0.00 if no matching asset is found', async () => {
+      mockTatumInstance.address.getBalance.mockResolvedValue({
+        data: [{ asset: 'BTC', balance: '5.00' }],
+      });
 
-      service['tatumInstances'][Network.ETHEREUM] = mockTatumInstance;
-      const instance = await service.getTatumInstance<Ethereum>(
+      const balance: BlockchainBalance = await service.getBalance(
         Network.ETHEREUM,
+        '0x1234567890abcdef',
       );
-      expect(instance).toBe(mockTatumInstance);
-      expect(TatumSDK.init).not.toHaveBeenCalled();
+
+      expect(balance).toEqual({ balance: new BigNumber('0.00') });
     });
 
-    it('should throw an error if API key is missing when initializing Tatum instance', async () => {
+    it('should throw an error if the balance fetch fails', async () => {
+      mockTatumInstance.address.getBalance.mockRejectedValue(
+        new Error('API Error'),
+      );
+
+      await expect(
+        service.getBalance(Network.ETHEREUM, '0x1234567890abcdef'),
+      ).rejects.toThrow('Failed to fetch balance.');
+    });
+
+    it('should throw an error if API key is missing', async () => {
       delete process.env.TATUM_ETHEREUM_MAINNET_API_KEY;
 
       await expect(
-        service.getTatumInstance<Ethereum>(Network.ETHEREUM),
-      ).rejects.toThrow('Missing API key for network: ethereum');
+        service.getBalance(Network.ETHEREUM, '0x1234567890abcdef'),
+      ).rejects.toThrow('Missing API key for network: ethereum-mainnet');
     });
   });
 });
