@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Wallet Balance Checker" />
+		<meta name="description" content="Check the ETH balance of any Ethereum address, on mainnet or Sepolia." />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="color-scheme" content="light dark" />
-		<title>Wallet Balance Checker</title>
+		<meta name="theme-color" content="#0b1022" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link rel="icon" type="image/svg+xml" href="/icon.svg" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<title>WalletBalance — check any Ethereum wallet's balance</title>
+		<!-- Runs before first paint, so a saved theme never flashes the other one first. -->
+		<script>
+			(()=>{try{const s=localStorage.getItem('theme');const d=matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.dataset.theme=s==='light'?'light':s==='system'?(d?'dark':'light'):'dark'}catch{}})()
+		</script>
 	</head>
 	<body>
 		<div id="app"></div>
