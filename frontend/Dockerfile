@@ -44,7 +44,10 @@
     RUN rm -rf ./*
     
     # Copy built frontend files from previous stage
-    COPY --from=builder /app/frontend/dist . 
+    COPY --from=builder /app/frontend/dist .
+
+    # Serve index.html for client-side routes such as /check
+    COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
     
     # Expose the port for serving the frontend (default 80)
     EXPOSE 80
