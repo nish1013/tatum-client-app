@@ -7,6 +7,7 @@ import {
   isValidBlockchainAddress,
 } from '@lib/common';
 import { getBalance } from '../../services/blockchainService';
+import { SegmentedControl } from '../../components/SegmentedControl';
 
 interface IdleResult {
   kind: 'idle';
@@ -88,40 +89,29 @@ export function BalanceForm() {
       onSubmit={handleSubmit}
       class="w-full rounded-2xl border border-line bg-surface p-6 text-left shadow-xl"
     >
-      <label for="chain" class="text-sm font-medium text-muted">
-        Chain
-      </label>
-      <select
-        id="chain"
+      <SegmentedControl
+        legend="Chain"
+        name="chain"
+        options={chains.map((c) => ({ value: c, label: c }))}
         value={chain}
-        onChange={(e) => handleChain(e.currentTarget.value as Chain)}
-        class={FIELD}
-      >
-        {chains.map((c) => (
-          <option key={c} value={c}>
-            {c}
-          </option>
-        ))}
-      </select>
+        onChange={handleChain}
+      />
 
-      <label for="network" class="mt-4 block text-sm font-medium text-muted">
-        Network
-      </label>
-      <select
-        id="network"
-        value={network}
-        onChange={(e) => {
-          setNetwork(e.currentTarget.value as BlockchainNetwork);
-          reset();
-        }}
-        class={FIELD}
-      >
-        {CHAIN_NETWORKS[chain].map((net) => (
-          <option key={net} value={net}>
-            {formatNetworkName(net)}
-          </option>
-        ))}
-      </select>
+      <div class="mt-4">
+        <SegmentedControl
+          legend="Network"
+          name="network"
+          options={CHAIN_NETWORKS[chain].map((net) => ({
+            value: net,
+            label: formatNetworkName(net),
+          }))}
+          value={network}
+          onChange={(next) => {
+            setNetwork(next);
+            reset();
+          }}
+        />
+      </div>
 
       <label for="address" class="mt-4 block text-sm font-medium text-muted">
         Wallet address
